@@ -2,6 +2,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const dotenv = require('dotenv');
 const userRoutes = require('./routes/userRoutes');
+const productRoutes = require('./routes/productRoutes');
 const app = express();
 
 dotenv.config();
@@ -31,6 +32,15 @@ mongoose
 app.use(express.json()); // to read data from request body
 
 app.use('/api/users', userRoutes);
+app.use('/api/products', productRoutes);
+
+app.use('/search', (req, res) => {
+  console.log(req.query);
+  res.status(200).json({
+    message: 'Search has been done successfully!',
+    data: req.query,
+  });
+});
 
 app.listen(port, () => {
   console.log(`server is running at ${port}`);
